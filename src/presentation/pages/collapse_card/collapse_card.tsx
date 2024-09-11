@@ -21,15 +21,16 @@ function CollapseCard({
   isOpen = false,
   onToggleClick,
   updateData,
-  closeCard,
+  
   deleteCelebrity,
+  onEditClick,
 }: {
   data: CelebrityUserModel;
   isOpen?: boolean;
   updateData: (data: CelebrityUserModel) => void;
   deleteCelebrity: () => void;
   onToggleClick: () => void;
-  closeCard: () => void;
+  onEditClick: (edit: boolean) => void;  
 }) {
   const [celebrity, setCelebrity] = useState<CelebrityUserModel>(data);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -44,6 +45,10 @@ function CollapseCard({
       setErrors(null);
     }
   }, [celebrity]);
+
+  useEffect(() => {
+    onEditClick(isEdit);
+  }, [isEdit]);
 
   const updateCelebrityDetails = ({
     name,
@@ -218,7 +223,7 @@ function CollapseCard({
               <button
                 onClick={() => {
                   setCelebrity(data);
-                  closeCard();
+                  setIsEdit(false);
                 }}
               >
                 <CancelOutlinedIcon color="error" />
@@ -228,7 +233,7 @@ function CollapseCard({
                 onClick={() => {
                   if (errors) return;
                   updateData(celebrity);
-                  closeCard();
+                  setIsEdit(false)
                 }}
               >
                 <CheckCircleOutlineOutlinedIcon color="success" />

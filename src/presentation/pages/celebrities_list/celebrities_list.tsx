@@ -8,6 +8,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 function CelebritiesList() {
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCeleb, setSelectedCeleb] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [celebritiesData, setCelebritiesData] = useState<CelebrityUserModel[]>(
     []
   );
@@ -64,10 +65,14 @@ function CelebritiesList() {
               <CollapseCard
                 data={celeb}
                 isOpen={selectedCeleb ? selectedCeleb === celeb?.id : false}
-                closeCard={() => setSelectedCeleb(null)}
-                updateData={(data) => updateData({ data, index })}
+                onEditClick={(edit) => setIsEditing(edit)}
+                updateData={(data) => {
+                  setIsEditing(false);
+                  updateData({ data, index });
+                }}
                 deleteCelebrity={() => deleteData(celeb.id!)}
                 onToggleClick={() => {
+                  if (isEditing) return;
                   setSelectedCeleb((prev) => {
                     if (prev === celeb.id) return null;
                     return celeb.id!;
