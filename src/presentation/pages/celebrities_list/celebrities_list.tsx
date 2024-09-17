@@ -74,7 +74,7 @@ function CelebritiesList() {
 
   const removeCeleb = (index: number) => {
     const localFilters = [...filterList];
-    const updatedList = localFilters.filter((l, idx) => idx !== index);
+    const updatedList = localFilters.filter((_, idx) => idx !== index);
     setFilterList(updatedList);
   };
 
