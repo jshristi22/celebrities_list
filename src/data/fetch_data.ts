@@ -1,3 +1,4 @@
+import { getFullName } from "../presentation/pages/collapse_card/helper";
 import data from "./celebrities.json";
 import {
   CelebrityUserModel,
@@ -12,13 +13,26 @@ export interface IPagination {
 
 export const fetchCelebrities = async ({
   pagination,
+  searchText,
 }: {
   pagination: IPagination;
+  searchText?: string;
 }): Promise<{ data: CelebrityUserModel[]; pagination?: IPagination }> => {
-  const response: any = await new Promise((resolve) => {
+  const response: CelebrityUserModel[] = await new Promise((resolve) => {
     return resolve(data.celebrities);
   });
-  const list = response.map((res: any) => getCelebrityUserModelFromJson(res));
+
+  let list = response.map((res, index) => {
+    const model = getCelebrityUserModelFromJson(res);
+    model.picture = `https://i.pravatar.cc/50${index}`;
+    return model;
+  });
+
+  if (searchText && searchText !== "") {
+    list = list.filter((ele) =>
+      getFullName(ele)?.toLowerCase()?.includes(searchText.toLowerCase())
+    );
+  }
 
   return {
     data: list.slice(

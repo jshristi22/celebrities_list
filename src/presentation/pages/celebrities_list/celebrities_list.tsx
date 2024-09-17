@@ -3,10 +3,9 @@ import CollapseCard from "../collapse_card/collapse_card";
 import { useEffect, useState } from "react";
 import { CelebrityUserModel } from "../../../data/celebrity_user_model";
 import styles from "./celebrities_list.module.scss";
-import { getFullName } from "../collapse_card/helper";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import TuneIcon from "@mui/icons-material/Tune";
 import GalleryView from "./gallery_view/gallery_view";
+// import TuneIcon from "@mui/icons-material/Tune";
 import PaginationComponent from "../../components/pagination_component/pagination_component";
 
 enum ViewType {
@@ -18,17 +17,17 @@ function CelebritiesList() {
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCeleb, setSelectedCeleb] = useState<number | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [filterList, setFilterList] = useState<string[]>([]);
-  const [viewType, setViewType] = useState(ViewType.Gallery);
+  const [viewType, setViewType] = useState(ViewType.List);
   const [celebritiesData, setCelebritiesData] = useState<{
     data: CelebrityUserModel[];
     pagination?: IPagination;
   }>({ data: [] });
+  // const [dropdownVisible, setDropdownVisible] = useState(false);
+  // const [filterList, setFilterList] = useState<string[]>([]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [searchText]);
 
   const fetchData = async (data?: IPagination) => {
     const resp = await fetchCelebrities({
@@ -36,6 +35,7 @@ function CelebritiesList() {
         limit: 3,
         offset: 0,
       },
+      searchText: searchText,
     });
     setCelebritiesData({ ...resp });
   };
@@ -62,21 +62,21 @@ function CelebritiesList() {
     setSelectedCeleb(null);
   };
 
-  const updateFilters = (name: string) => {
-    // if already present
-    if (filterList.includes(name)) return;
+  // const updateFilters = (name: string) => {
+  //   // if already present
+  //   if (filterList.includes(name)) return;
 
-    // adding new celeb
-    const local = [...filterList];
-    local.push(name);
-    setFilterList(local);
-  };
+  //   // adding new celeb
+  //   const local = [...filterList];
+  //   local.push(name);
+  //   setFilterList(local);
+  // };
 
-  const removeCeleb = (index: number) => {
-    const localFilters = [...filterList];
-    const updatedList = localFilters.filter((_, idx) => idx !== index);
-    setFilterList(updatedList);
-  };
+  // const removeCeleb = (index: number) => {
+  //   const localFilters = [...filterList];
+  //   const updatedList = localFilters.filter((_, idx) => idx !== index);
+  //   setFilterList(updatedList);
+  // };
 
   return (
     <div className={styles.viewContainer}>
@@ -111,7 +111,7 @@ function CelebritiesList() {
             />
           </div>
           {/* Filters */}
-          <div className={styles.filtersContainer}>
+          {/* <div className={styles.filtersContainer}>
             <div className={styles.filters}>
               <div
                 onClick={() => {
@@ -156,36 +156,30 @@ function CelebritiesList() {
                 })}
               </div>
             )}
-          </div>
+          </div> */}
           {/* List */}
           {celebritiesData?.data?.map((celeb, index) => {
-            if (
-              getFullName(celeb)
-                ?.toLowerCase()
-                ?.includes(searchText.toLowerCase())
-            ) {
-              return (
-                <div key={celeb?.id}>
-                  <CollapseCard
-                    data={celeb}
-                    isOpen={selectedCeleb ? selectedCeleb === celeb?.id : false}
-                    onEditClick={(edit) => setIsEditing(edit)}
-                    updateData={(data) => {
-                      setIsEditing(false);
-                      updateData({ data, index });
-                    }}
-                    deleteCelebrity={() => deleteData(celeb.id!)}
-                    onToggleClick={() => {
-                      if (isEditing) return;
-                      setSelectedCeleb((prev) => {
-                        if (prev === celeb.id) return null;
-                        return celeb.id!;
-                      });
-                    }}
-                  />
-                </div>
-              );
-            }
+            return (
+              <div key={celeb?.id}>
+                <CollapseCard
+                  data={celeb}
+                  isOpen={selectedCeleb ? selectedCeleb === celeb?.id : false}
+                  onEditClick={(edit) => setIsEditing(edit)}
+                  updateData={(data) => {
+                    setIsEditing(false);
+                    updateData({ data, index });
+                  }}
+                  deleteCelebrity={() => deleteData(celeb.id!)}
+                  onToggleClick={() => {
+                    if (isEditing) return;
+                    setSelectedCeleb((prev) => {
+                      if (prev === celeb.id) return null;
+                      return celeb.id!;
+                    });
+                  }}
+                />
+              </div>
+            );
           })}
           <PaginationComponent
             pagination={celebritiesData?.pagination}
