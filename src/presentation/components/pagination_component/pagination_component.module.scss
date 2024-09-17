@@ -1,0 +1,20 @@
+$border-color: rgba(128, 128, 128, 0.39);
+
+.paginationContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    padding: 4px 10px;
+
+    p,
+    h6 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    p {
+        cursor: pointer;
+    }
+}

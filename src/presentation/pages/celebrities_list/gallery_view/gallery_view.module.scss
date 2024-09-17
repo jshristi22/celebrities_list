@@ -1,0 +1,33 @@
+$border-color: rgba(128, 128, 128, 0.39);
+
+.galleryView {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 30px;
+
+    .user {
+        box-shadow: 0px 4px 8px gray;
+        padding: 16px 20px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+
+        img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .details {
+            padding: 5px 0;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+
+            h5 {
+                font-weight: 400;
+                font-size: 16px;
+                margin: 0;
+            }
+        }
+    }
+}
