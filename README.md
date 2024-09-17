@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
+# [Celebrity List](https://celebrities-list-sj.netlify.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### About
 
-Currently, two official plugins are available:
+Designed a celebrity list UI showcasing list and grid views, with features like pagination, infinite scrolling, search and filter functionality, and handling data fetching along with read, update, and delete operations for celebrities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Key features
 
-## Expanding the ESLint configuration
+- **List and Grid View Implementation**:
+  - Developed UI components that allow users to toggle between **list view** and **grid view** for displaying celebrity profiles.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Pagination and Infinite Scrolling**:
+  - Implemented **pagination** for structured data display, enabling users to navigate through pages.
+  - Added **infinite scrolling** for seamless user experience, automatically loading more data as users scroll down the page.
 
-- Configure the top-level `parserOptions` property like this:
+- **Search and Filter Functionality**:
+  - Built robust **search functionality** that allows users to quickly find celebrities by name or other attributes.
+  - Integrated advanced **filter options**, allowing users to refine the list based on criteria such as age, popularity, or profession.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Data Fetching**:
+  - Implemented real-time **data fetching** from an API or database to display updated celebrity profiles and information.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **CRUD Operations**:
+  - Enabled full **read, update, and delete operations** for celebrity profiles, allowing users to interact with and modify data directly within the UI.
+  - Provided an intuitive user interface for managing celebrity details efficiently.
